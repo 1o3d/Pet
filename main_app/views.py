@@ -35,8 +35,17 @@ def quiz(request):
 def data_view(request):
     response = requests.get('https://data.calgary.ca/resource/99yf-6c5u.json')
     data = json.loads(response.text) if response.status_code == 200 else []
+    for item in data:
+        if 'address' in item and ' AV ' in item['address']:
+            item['address'] = item['address'].replace(' AV ', ' AVE ')
+        if 'address' in item:
+            item['address'] += ', Calgary'    
     return render(request, 'data.html', {'data': data})
 
 
 def about_view(request):
     return render(request, 'main_app/about.html')
+
+
+def contact(request):
+    return render(request, 'main_app/contact.html')
