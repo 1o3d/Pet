@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,18 +7,24 @@
     <meta charset="utf-8">
     <style>
       #map {
-        height: 80%;
+        height: 600px;
+        width: 800px;
+      margin-left: 17%;
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+      border-radius: 12px;
+        
       }
       html, body {
         height: 100%;
-        margin: 0;
+        width: 100%;
+        margin: 10;
         padding: 0;
       }
 
       .button {
-        background-color: #4CAF50; /* Green */
+        background-color: rgb(255, 255, 255); /* Green */
         border: none;
-        color: white;
+        color: black;
         padding: 15px 32px;
         text-align: center;
         text-decoration: none;
@@ -25,37 +32,128 @@
         font-size: 16px;
         margin: 4px 2px;
         cursor: pointer;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        transition-duration: 0.4s;
       }
+      .button:hover {
+  background-color: #747171; /* Green */
+  color: white;
+}
+
+        p{
+          font-size: 17px;
+      line-height: 1.5;
+        }
+      .title{
+        background-color: rgb(252, 250, 250); /* Green */
+        border: none;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 50px;
+        margin: 4px 2px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        transition-duration: 0.4s;
+        margin-left: 30%;
+        width: 50%;
+        
+        
+      }
+      /* The sidebar menu */
+.links {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 250px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 0; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #343434; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 15px;
+  font-family:Arial, Helvetica, sans-serif;
+}
+.sidebar{
+  color: #fff;
+  text-align: center;
+  font-size: 32px;
+  margin: 0;
+}
+/* The navigation menu links */
+.links a {
+  padding: 6px 8px 6px 10px;
+  text-decoration: none;
+  font-size: 17px;
+  color: white;
+  display: block;
+}
+.links a:hover:not(.active) {
+  background-color: #4c4b4b;
+  color: white;
+  
+}
+
+/* Style page content */
+.main {
+  margin-left: 260px; /* Same as the width of the sidebar */
+  padding: 0px 10px;
+}
+h3{
+  font-size: 25px;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .links {padding-top: 15px;}
+  .links a {font-size: 18px;}
+}
     </style>
   </head>
   <body>
-    <h2>Your Destination</h2>
-    <button id="generateMapButton">Generate Map</button>
-
-    <input id="address" type="text" style="display: none;" value="{% for item in data %}{{ item.address }}{% endfor %}">
+    <div class="links">
+      <p class= 'sidebar'>Sidebar</p><br>
+      <a href="/">Home</a> <br>
+      <a href="/about">About</a><br>
+      <a href="/contact">Contact</a>
+    </div>
     
-    <div id="map"></div>
+    
+    <h1 class="title">Your Destination</h1>
+    
+    <div class=" main">
+    <input id="address" type="text" style="display: none;" value="{% for item in data %}{{ item.address }}{% endfor %}">
     {% for item in data %}
-    <p>Address: {{ item.address }}</p>
-                <p>Community: {{ item.community }}</p>
-                <p>Construction Year: {{ item.contruction_yr }}</p>
-                <p>Typology: {{ item.typology }}</p>
-                <p>Original Use Type: {{ item.orig_use_ty }}</p>
-                <p>Architect: {{ item.architect }}</p>
-                <p>Architecture Style: {{ item.architecture_style }}</p>
-                <p>Development Era: {{ item.development_era }}</p>
-                <p>Significance Summary: {{ item.significance_summ }}</p>
-                <p>Image: {{ item.integrity_stmt }}</p>
-                <img src="{{ item.pic_url }}" alt="{{ item.name }}">
+    <h3><strong>{{ item.name }}</strong></h3>
+    {% endfor %}
+
+    <div id="map"></div>
+    <button class="button" id="generateMapButton">Generate Location</button>
+    {% for item in data %}
+                <h3><strong>Address:</strong></h3> <p> {{item.address }}</p>
+                <h3><strong>Community: </strong></h3><p>{{ item.community }}</p>
+                <h3><strong>Construction Year:</strong></h3> <p>{{ item.contruction_yr }}</p>
+                <h3><strong>Typology:</strong> </h3><p>{{ item.typology }}</p>
+                <h3><strong>Original Use Type:</strong></h3><p>{{ item.orig_use_ty }}</p>
+                <h3><strong>Architect:</strong> </h3> <p>{{ item.architect }}</p>
+                <h3><strong>Architecture Style: </strong></h3><p>{{ item.architecture_style }}</p>
+                <h3><strong>Development Era:</strong> </h3><p>{{ item.development_era }}</p>
+                <h3><strong id="summary">Significance Summary:</strong></h3> <p>{{ item.significance_summ }}</p>
+                <h3><strong id="summary">Image: </strong></h3><p>{{ item.integrity_stmt }}</p>
+                <img src="{{ item.pic_url }}" alt="{{ item.name }}" style="display: block; margin-left: auto; margin-right: auto; width: 500px; height:500px;border-radius: 8px;max-width: 100%; height: auto;border-width:10px ;">
                 {% endfor %}
-                <a href="/">
-                  <button class="button">Return Home</button>
-                </a>
+                
                 <form method="post" action="{% url 'map_view' %}">
                   {% csrf_token %}
                   <button type="submit" class="button">Next</button>
                 </form>
-
+                  <a href="/">
+                    <button class="button">Return Home</button>
+                  </a>
+                
+                </div>
 
     <!-- Javascript -->
 
@@ -93,7 +191,7 @@ function nextButtonClick() {
         var calgary = {lat: 51.0447, lng: -114.0719};
         map = new google.maps.Map(document.getElementById('map'), {
           center: calgary,
-          zoom: 8
+          zoom: 10.5
         });
     
         var geocoder = new google.maps.Geocoder();
@@ -133,5 +231,6 @@ function nextButtonClick() {
     </script>
     <script src="https://cdn.jsdelivr.net/gh/somanchiu/Keyless-Google-Maps-API@v6.6/mapsJavaScriptAPI.js"
     async defer></script>
+
   </body>
 </html>
