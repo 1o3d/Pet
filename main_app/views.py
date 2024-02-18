@@ -28,3 +28,5 @@ def quiz(request):
     else:
         form = QuizQuestions()
     return render(request, 'main_app/quiz.html', {'form': form})
+
+def travel(request):
