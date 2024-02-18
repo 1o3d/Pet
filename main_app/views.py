@@ -40,3 +40,7 @@ def data_view(request):
 
 def about_view(request):
     return render(request, 'main_app/about.html')
+
+
+def contact(request):
+    return render(request, 'main_app/contact.html')
