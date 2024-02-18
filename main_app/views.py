@@ -1,6 +1,9 @@
+from django.shortcuts import render, HttpResponse
+from .models import historicalModels
+import requests
+import json
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-
 from .forms import QuizQuestions
 
 
@@ -29,4 +32,7 @@ def quiz(request):
         form = QuizQuestions()
     return render(request, 'main_app/quiz.html', {'form': form})
 
-def travel(request):
+def data_view(request):
+    response = requests.get('https://data.calgary.ca/resource/99yf-6c5u.json')
+    data = json.loads(response.text) if response.status_code == 200 else []
+    return render(request, 'data.html', {'data': data})
