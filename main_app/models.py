@@ -2,7 +2,6 @@ from django.db import models
 
 
 class historicalModels(models.Model):
-    id = models.IntegerField()
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     community = models.CharField(max_length=255)
