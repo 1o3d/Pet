@@ -7,7 +7,20 @@
     <h1>Data from API</h1>
     <ul>
     {% for item in data %}
-        <li>{{ item }}</li>
+        <li>
+            <h2>Name: {{ item.name }}</h2>
+            <p>Address: {{ item.address }}</p>
+            <p>Community: {{ item.community }}</p>
+            <p>Construction Year: {{ item.contruction_yr }}</p>
+            <p>Typology: {{ item.typology }}</p>
+            <p>Original Use Type: {{ item.orig_use_ty }}</p>
+            <p>Architect: {{ item.architect }}</p>
+            <p>Architecture Style: {{ item.architecture_style }}</p>
+            <p>Development Era: {{ item.development_era }}</p>
+            <p>Significance Summary: {{ item.significance_summ }}</p>
+            <p>Integrity Statement: {{ item.integrity_stmt }}</p>
+            <img src="{{ item.pic_url }}" alt="{{ item.name }}">
+        </li>
         <br>
     {% endfor %}
     </ul>
