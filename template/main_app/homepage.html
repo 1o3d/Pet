@@ -1,3 +1,6 @@
+{% extends 'main_app/Sidebar.html' %}
+{% load crispy_forms_tags%}
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -8,6 +11,7 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+    {% block content %}
         <header>
             <h1>Historical Sites</h1>
         </header>
@@ -25,11 +29,15 @@
             <p>Hello and welcome to the historical guide. There are several places to visit here in Calgary. 
                 Let us start by taking a short survey to help make the guide specialized to your taste. However 
                 if you just want a random guide, we have that option too. Just click on the option that you want.</p>
-            <form action="/fetch/" method="post">
+
+            <form action="travel/" method="post">
                 <input type="submit" name="action" value="Random"/>
-                <input type="submit" name="action" value="Survery"/>
              </form>
+            <br>
+            <form action="quiz/" method = "post">
+                <input type="submit" name="action" value="Survey"/>
+            </form>
         </main>
-    
+    {% endblock %}
     </body>
 </html>

@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CSRF_COOKIE_DOMAIN = None
 
 # Application definition
 
@@ -37,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "main_app.apps.Main_appConfig",
-    # Self apps
-
+    "main_app.apps.MainAppConfig",
+    "crispy_forms",
+    "crispy_bootstrap5"
 ]
 
 MIDDLEWARE = [
@@ -54,10 +55,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Pet.urls'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [BASE_DIR / 'template']
         ,
         'APP_DIRS': True,
         'OPTIONS': {

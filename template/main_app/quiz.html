@@ -1,0 +1,33 @@
+{% extends 'main_app/Sidebar.html' %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Form</title>
+</head>
+<body>
+    {% block content %}
+    <h1>Quiz Form</h1>
+<form method="POST" class="form form_login">
+        <div>
+            <label for="id_zodiac">What's your zodiac sign?</label>
+            {{ form.zodiac }}
+        </div>
+        <div>
+            <label for="id_horror">If you were in a horror movie, where would you like it to be set?</label>
+            {{ form.horror }}
+        </div>
+        <div>
+            <label for="id_bridges">Do you like bridges:</label>
+            {{ form.bridges}}
+        </div>
+        <div>
+            <label for="id_profession">Profession:</label>
+            {{ form.profession }}
+        </div>
+    </form>
+{% endblock %}
+</body>
+</html>
