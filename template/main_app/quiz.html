@@ -11,7 +11,7 @@
 <body>
     {% block content %}
     <h1>Quiz Form</h1>
-<form method="POST" class="form form_login">
+<form method="POST" class="form form_login" action="/map/">
         <div>
             <label for="id_zodiac">What's your zodiac sign?</label>
             {{ form.zodiac }}
@@ -28,8 +28,9 @@
             <label for="id_profession">Profession:</label>
             {{ form.profession }}
         </div>
-        <input type="submit" value="Submit">
-      <input type="reset" value="Reset">
+         <input type="submit" value="Submit">
+        
+      <input type="reset" value="reset">
     </form>
 {% endblock %}
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

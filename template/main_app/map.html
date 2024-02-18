@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      #map {
+        height: 80%;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Your Destination</h2>
+    <button id="generateMapButton">Generate Map</button>
+
+    <input id="address" type="text" style="display: none;" value="{% for item in data %}{{ item.address }}{% endfor %}">
+    
+    <div id="map"></div>
+    {% for item in data %}
+    <p>Address: {{ item.address }}</p>
+                <p>Community: {{ item.community }}</p>
+                <p>Construction Year: {{ item.contruction_yr }}</p>
+                <p>Typology: {{ item.typology }}</p>
+                <p>Original Use Type: {{ item.orig_use_ty }}</p>
+                <p>Architect: {{ item.architect }}</p>
+                <p>Architecture Style: {{ item.architecture_style }}</p>
+                <p>Development Era: {{ item.development_era }}</p>
+                <p>Significance Summary: {{ item.significance_summ }}</p>
+                <p>Image: {{ item.integrity_stmt }}</p>
+                <img src="{{ item.pic_url }}" alt="{{ item.name }}">
+                {% endfor %}
+                <a href="/">
+                  <button class="button">Return Home</button>
+                </a>
+                <form method="post" action="{% url 'map_view' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="button">Next</button>
+                </form>
+
+
+    <!-- Javascript -->
+
+    <script>
+      var currentIndex = 0; // Initialize the index
+
+// Function to display information for the current index
+function displayInfo() {
+  // Make sure data is available and the current index is within bounds
+  if (data && data.length > 0 && currentIndex < data.length) {
+    var currentItem = data[currentIndex];
+    // Update the HTML elements with information from the current item
+    document.getElementById('address').textContent = 'Address: ' + currentItem.address;
+    document.getElementById('community').textContent = 'Community: ' + currentItem.community;
+    // Add more lines to display other information as needed
+
+    // Update the map marker
+    geocodeAddress(geocoder, map, currentItem.address);
+  }
+}
+
+// Function to handle the "Next" button click
+function nextButtonClick() {
+  // Increment the current index
+  currentIndex++;
+  // Check if we've reached the end of the indices list, reset to 0 if needed
+  if (currentIndex >= indices.length) {
+    currentIndex = 0;
+  }
+  // Display information for the updated index
+  displayInfo();
+}
+      var map;
+      function initMap() {
+        var calgary = {lat: 51.0447, lng: -114.0719};
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: calgary,
+          zoom: 8
+        });
+    
+        var geocoder = new google.maps.Geocoder();
+        var generateMapButton = document.getElementById('generateMapButton');
+
+  // Add a click event listener to the button
+  generateMapButton.addEventListener('click', function() {
+    geocodeAddress(geocoder, map);
+  });
+      }
+    
+      function geocodeAddress(geocoder, resultsMap) {
+  var initialAddress = document.getElementById('address').value;
+  geocoder.geocode({ 'address': initialAddress }, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+    
+            // Limpiar marcadores anteriores
+            resultsMap.markers = resultsMap.markers || [];
+            for (var i = 0; i < resultsMap.markers.length; i++) {
+              resultsMap.markers[i].setMap(null);
+            }
+    
+            // Añadir nuevo marcador
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+    
+            // Guardar el marcador en la propiedad 'markers' del mapa
+            resultsMap.markers.push(marker);
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/somanchiu/Keyless-Google-Maps-API@v6.6/mapsJavaScriptAPI.js"
+    async defer></script>
+  </body>
+</html>
